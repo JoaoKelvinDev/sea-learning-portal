@@ -7,7 +7,16 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 export const Route = createFileRoute("/login")({
-  head: () => ({ meta: [{ title: "Entrar — SEA" }, { name: "description", content: "Acesse o Sistema Educacional Avançado." }] }),
+  head: () => ({
+    meta: [
+      { title: "Entrar — SEA" },
+      { name: "description", content: "Acesse seu painel no Sistema Educacional Avançado." },
+      { property: "og:title", content: "Entrar — SEA" },
+      { property: "og:description", content: "Acesse atividades, conquistas e relatórios no Sistema Educacional Avançado." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
+    ],
+  }),
   component: Login,
 });
 
