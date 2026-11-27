@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { BookOpen, GraduationCap, CalendarDays, BarChart3, Users, Pencil, Calculator, Microscope, ArrowRight } from "lucide-react";
+import { useEffect, useState } from "react";
+import { BookOpen, GraduationCap, CalendarDays, BarChart3, Users, Pencil, Calculator, Microscope, ArrowRight, LogIn } from "lucide-react";
 import classroom from "@/assets/classroom.jpg.asset.json";
 import library from "@/assets/library.jpg.asset.json";
 import { Button } from "@/components/ui/button";
@@ -23,20 +24,30 @@ const features = [
 
 function Index() {
   return (
-    <div className="min-h-screen overflow-hidden bg-background">
-      <header className="relative z-10 mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
-        <div className="flex items-center gap-2">
-          <span className="grid size-10 place-items-center rounded-xl bg-brand-gradient text-primary-foreground shadow-elegant">
-            <GraduationCap className="size-5" />
-          </span>
-          <span className="font-display text-xl font-bold text-foreground">SEA</span>
+    <div className="min-h-screen bg-background">
+      <header className="sticky top-0 z-50 border-b border-border/60 bg-background/85 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-4">
+          <Link to="/" className="flex items-center gap-2.5 rounded-xl outline-none focus-visible:ring-2 focus-visible:ring-ring">
+            <span className="grid size-11 place-items-center rounded-xl bg-brand-gradient text-primary-foreground shadow-elegant transition-transform hover:rotate-6">
+              <GraduationCap className="size-6" />
+            </span>
+            <span className="font-display text-xl font-bold text-foreground">SEA</span>
+          </Link>
+
+          <div className="relative shrink-0">
+            <span className="pointer-events-none absolute -inset-1 animate-pulse-ring rounded-full bg-primary/55 blur-md" aria-hidden />
+            <Button asChild size="lg" className="group relative z-10 rounded-full bg-brand-gradient px-6 text-sm font-bold uppercase tracking-wide text-primary-foreground shadow-glow transition-transform hover:scale-105 sm:px-8 sm:text-base">
+              <Link to="/login">
+                <LogIn className="size-5" />
+                Entrar
+                <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+              </Link>
+            </Button>
+          </div>
         </div>
-        <Button asChild className="rounded-full px-6">
-          <Link to="/login">Entrar</Link>
-        </Button>
       </header>
 
-      <section className="relative mx-auto grid max-w-7xl items-center gap-12 px-6 pb-20 pt-8 lg:grid-cols-2">
+      <section className="relative mx-auto grid max-w-7xl items-center gap-12 overflow-x-clip px-6 pb-20 pt-8 lg:grid-cols-2">
         <div className="pointer-events-none absolute -left-32 top-0 size-96 animate-blob rounded-full bg-primary/20 blur-3xl" />
         <div className="pointer-events-none absolute right-0 top-40 size-80 animate-blob rounded-full bg-brand-orange/25 blur-3xl [animation-delay:-5s]" />
         <div className="relative animate-fade-up">
@@ -114,6 +125,33 @@ function Index() {
       <footer className="bg-brand-gradient py-8 text-center text-sm text-primary-foreground">
         © 2026 SEA — Sistema Educacional Avançado
       </footer>
+
+      <FloatingEnter />
+    </div>
+  );
+}
+
+function FloatingEnter() {
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setShow(window.scrollY > 320);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  if (!show) return null;
+
+  return (
+    <div className="fixed inset-x-4 bottom-5 z-50 sm:inset-x-auto sm:bottom-8 sm:right-8 sm:w-auto">
+      <Button asChild size="lg" className="w-full animate-fade-up justify-center gap-2 rounded-full bg-brand-gradient px-8 py-4 text-base font-bold uppercase tracking-wide text-primary-foreground shadow-glow transition-transform hover:scale-105 sm:w-auto sm:px-6 sm:py-3 sm:text-sm">
+        <Link to="/login">
+          <LogIn className="size-5" />
+          Entrar
+          <ArrowRight className="size-4" />
+        </Link>
+      </Button>
     </div>
   );
 }
